@@ -1,6 +1,5 @@
 from django.db import models
-
-# Create your models here.
+from django_ckeditor_5.fields import CKEditor5Field
 
 class Category(models.Model):
     name = models.CharField(verbose_name="Category name",max_length=250)
@@ -20,7 +19,8 @@ class Tag(models.Model):
 
 class Post(models.Model):
     title = models.CharField(verbose_name="Post title",max_length=550)
-    body = models.TextField(verbose_name="Post body")
+    subtitle = models.CharField(max_length=100)
+    body = CKEditor5Field(config_name='extends')
     author = models.CharField(verbose_name="Post author",default="Admin",max_length=100)
     category = models.ForeignKey(Category, on_delete=models.PROTECT,related_name='posts')
     tag = models.ManyToManyField(Tag)

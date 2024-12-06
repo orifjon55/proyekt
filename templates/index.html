@@ -144,7 +144,7 @@
                     >
                       <h4 class="card-title fw-bold">{{post.title}}</h4></a
                     >
-                    <p class="card-text">{{post.body|truncatewords:'35'}}</p>
+                    <p class="card-text">{{post.subtitle|truncatewords:'35'}}</p>
                     {% for tag in post.tag.all %}
                     <span class="badge rounded-pill text-bg-secondary"
                       >{{tag.name}}</span
