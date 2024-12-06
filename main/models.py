@@ -1,5 +1,7 @@
 from django.db import models
 from django_ckeditor_5.fields import CKEditor5Field
+from django.contrib.auth.models import User
+
 
 class Category(models.Model):
     name = models.CharField(verbose_name="Category name",max_length=250)
@@ -21,7 +23,7 @@ class Post(models.Model):
     title = models.CharField(verbose_name="Post title",max_length=550)
     subtitle = models.CharField(max_length=100)
     body = CKEditor5Field(config_name='extends')
-    author = models.CharField(verbose_name="Post author",default="Admin",max_length=100)
+    author = models.ForeignKey(User,on_delete=models.SET_NULL,null=True,blank=True)
     category = models.ForeignKey(Category, on_delete=models.PROTECT,related_name='posts')
     tag = models.ManyToManyField(Tag)
     views = models.PositiveIntegerField(default=0)
@@ -44,7 +46,7 @@ class Post(models.Model):
 
 class Comment(models.Model):
     author = models.CharField(verbose_name="Comment author",max_length=100,blank=False)
-    comment = models.TextField(verbose_name="Comment")
+    author = models.ForeignKey(User,on_delete=models.SET_NULL,null=True,blank=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     
     
